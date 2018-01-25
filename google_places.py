@@ -3,7 +3,7 @@
 # @Email:  benjamin.r.everett@gmail.com
 # @Filename: google_places.py
 # @Last modified by:   beneverett
-# @Last modified time: 01-23-2018
+# @Last modified time: 01-24-2018
 
 import requests
 import os
@@ -23,8 +23,10 @@ class HitGooglePlacesAPI(object):
         self.meta_data_response = self._hit_api(api='meta_data',
                                                 address=address)
 
-    def fetch_radius_info(self, address, radius=100):
-        lat_lng = self._get_lat_lng(address=address)
+    def fetch_radius_info(self, address=None, lat_lng=None, radius=100):
+        if lat_lng is None:
+            lat_lng = self._get_lat_lng(address=address)
+
         self.radius_response = self._hit_api(api='radius',
                                              lat_lng=lat_lng,
                                              radius=radius)
@@ -119,6 +121,6 @@ class HitGooglePlacesAPI(object):
 if __name__ == '__main__':
     place = HitGooglePlacesAPI(internal_api_key="GOOGLE")
     place.fetch_metadata_info(address='5225 E 38th Ave, Denver, CO 80207')
-    place.fetch_radius_info(address='5225 E 38th Ave, Denver, CO 80207')
+    place.fetch_radius_info(address='5225 E 38th Ave, Denver, CO 80207', radius=100)
     place.fetch_detailed_info(address='5225 E 38th Ave, Denver, CO 80207')
-    place.fetch_detailed_info(place_id='ChIJU5jhOsN7bIcR-X_Al6v1LSY')
+    # place.fetch_detailed_info(place_id='ChIJU5jhOsN7bIcR-X_Al6v1LSY')
